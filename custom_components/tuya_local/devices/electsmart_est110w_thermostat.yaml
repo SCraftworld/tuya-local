@@ -1,0 +1,233 @@
+name: Thermostat
+products:
+  - id: q01ynm2gtg1fw8vb
+    manufacturer: Electsmart
+    model: EST-110W
+entities:
+  - entity: climate
+    translation_key: thermostat
+    dps:
+      - id: 1
+        name: hvac_mode
+        type: boolean
+        mapping:
+          - dps_val: false
+            value: "off"
+          - dps_val: true
+            value: heat
+      - id: 4
+        name: preset_mode
+        type: boolean
+        mapping:
+          - dps_val: false
+            value: comfort
+          - dps_val: true
+            value: eco
+      - id: 16
+        name: temperature
+        type: integer
+        unit: C
+        range:
+          min: 50
+          max: 900
+        mapping:
+          - scale: 10
+            step: 5
+      - id: 24
+        name: current_temperature
+        type: integer
+        unit: C
+        mapping:
+          - scale: 10
+      - id: 36
+        name: hvac_action
+        type: string
+        mapping:
+          - dps_val: close
+            value: idle
+          - dps_val: open
+            value: heating
+  - entity: sensor
+    name: Floor temperature
+    class: temperature
+    dps:
+      - id: 104
+        name: sensor
+        type: integer
+        class: measurement
+        unit: C
+        optional: true
+        mapping:
+          - scale: 10
+  - entity: lock
+    translation_key: child_lock
+    category: config
+    dps:
+      - id: 40
+        name: lock
+        type: boolean
+        optional: true
+  - entity: select
+    name: Sensor selection
+    icon: mdi:home-thermometer
+    category: config
+    dps:
+      - id: 110
+        name: option
+        type: string
+        optional: true
+        mapping:
+          - dps_val: IN
+            value: Internal (air)
+          - dps_val: OU
+            value: External (floor)
+          - dps_val: ALL
+            value: Both
+  - entity: select
+    name: Mode
+    icon: mdi:cog
+    dps:
+      - id: 2
+        name: option
+        type: string
+        mapping:
+          - dps_val: Hand
+            value: Manual
+          - dps_val: Auto
+            value: Auto
+          - dps_val: Temporary
+            value: Temporary
+  - entity: number
+    translation_key: temperature_calibration
+    class: temperature_delta
+    category: config
+    dps:
+      - id: 27
+        name: value
+        type: integer
+        unit: C
+        optional: true
+        range:
+          min: -9
+          max: 9
+  - entity: number
+    name: Temperature hysteresis
+    icon: mdi:arrow-expand-vertical
+    class: temperature_delta
+    category: config
+    dps:
+      - id: 111
+        name: value
+        type: integer
+        unit: C
+        optional: true
+        range:
+          min: 1
+          max: 5
+  - entity: number
+    name: Eco temperature
+    class: temperature
+    icon: mdi:leaf
+    category: config
+    dps:
+      - id: 105
+        name: value
+        type: integer
+        unit: C
+        optional: true
+        range:
+          min: 50
+          max: 300
+        mapping:
+          - scale: 10
+            step: 5
+  - entity: number
+    name: High temperature protection
+    class: temperature
+    icon: mdi:weather-sunny-alert
+    category: config
+    dps:
+      - id: 112
+        name: value
+        type: integer
+        unit: C
+        optional: true
+        range:
+          min: 350
+          max: 700
+        mapping:
+          - scale: 10
+            step: 5
+  - entity: number
+    name: Low temperature protection
+    class: temperature
+    icon: mdi:snowflake-alert
+    category: config
+    dps:
+      - id: 113
+        name: value
+        type: integer
+        unit: C
+        optional: true
+        range:
+          min: 0
+          max: 100
+        mapping:
+          - scale: 10
+            step: 5
+  - entity: number
+    translation_key: maximum_temperature
+    class: temperature
+    category: config
+    dps:
+      - id: 19
+        name: value
+        type: integer
+        unit: C
+        optional: true
+        range:
+          min: 250
+          max: 900
+        mapping:
+          - scale: 10
+            step: 5
+  - entity: number
+    translation_key: minimum_temperature
+    class: temperature
+    category: config
+    dps:
+      - id: 26
+        name: value
+        type: integer
+        unit: C
+        optional: true
+        range:
+          min: 50
+          max: 250
+        mapping:
+          - scale: 10
+            step: 5
+  - entity: number
+    name: Day display brightness
+    icon: mdi:brightness-6
+    category: config
+    dps:
+      - id: 114
+        name: value
+        type: integer
+        optional: true
+        range:
+          min: 0
+          max: 10
+  - entity: number
+    name: Night display brightness
+    icon: mdi:brightness-4
+    category: config
+    dps:
+      - id: 115
+        name: value
+        type: integer
+        optional: true
+        range:
+          min: 0
+          max: 10
